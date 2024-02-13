@@ -1,8 +1,8 @@
 #include "sierrachart.h"
 
-SCDLLName("TradingLockedText") 
+SCDLLName("TradingLockedText")
 
-SCSFExport scsf_Trading_Locked_Text(SCStudyInterfaceRef sc)
+	SCSFExport scsf_Trading_Locked_Text(SCStudyInterfaceRef sc)
 {
 	SCSubgraphRef TextDisplay = sc.Subgraph[0];
 
@@ -10,8 +10,8 @@ SCSFExport scsf_Trading_Locked_Text(SCStudyInterfaceRef sc)
 	SCInputRef VerticalPosition = sc.Input[1];
 	SCInputRef DisplayInFillSpace = sc.Input[2];
 	SCInputRef BoldFont = sc.Input[3];
-    SCInputRef LockedText = sc.Input[4];
-    SCInputRef TransparentBG = sc.Input[5];
+	SCInputRef LockedText = sc.Input[4];
+	SCInputRef TransparentBG = sc.Input[5];
 
 	if (sc.SetDefaults)
 	{
@@ -19,7 +19,7 @@ SCSFExport scsf_Trading_Locked_Text(SCStudyInterfaceRef sc)
 
 		sc.GraphName = "Trading Locked Text";
 		sc.AutoLoop = 0;
-        sc.FreeDLL = 0;
+		sc.FreeDLL = 0;
 		sc.GraphRegion = 0;
 
 		TextDisplay.Name = "Text";
@@ -43,20 +43,21 @@ SCSFExport scsf_Trading_Locked_Text(SCStudyInterfaceRef sc)
 		BoldFont.Name = "Used Bold Font";
 		BoldFont.SetYesNo(true);
 
-        sc.TextInputName = "Locked Text";
-        sc.TextInput = "TRADING LOCKED";
-        
-        TransparentBG.Name = "Transparent Background";
-        TransparentBG.SetYesNo(false);
+		sc.TextInputName = "Locked Text";
+		sc.TextInput = "TRADING LOCKED";
+
+		TransparentBG.Name = "Transparent Background";
+		TransparentBG.SetYesNo(false);
 
 		return;
 	}
 
 	// Do data processing
-	if (sc.HideStudy) return; // Do nothing if study is hidden
+	if (sc.HideStudy)
+		return; // Do nothing if study is hidden
 
-	int& r_TextDrawingLineNumber = sc.GetPersistentInt(1);
-    int& r_LineNumberTextDrawingLineNumber = sc.GetPersistentInt(2);  // Use another persistent int for line number
+	int &r_TextDrawingLineNumber = sc.GetPersistentInt(1);
+	int &r_LineNumberTextDrawingLineNumber = sc.GetPersistentInt(2); // Use another persistent int for line number
 
 	s_UseTool Tool;
 
@@ -79,7 +80,7 @@ SCSFExport scsf_Trading_Locked_Text(SCStudyInterfaceRef sc)
 	Tool.Color = TextDisplay.PrimaryColor;
 	Tool.FontBackColor = TextDisplay.SecondaryColor;
 	Tool.MultiLineLabel = true;
-    Tool.AddAsUserDrawnDrawing = 1;
+	Tool.AddAsUserDrawnDrawing = 1;
 
 	if (BoldFont.GetYesNo())
 		Tool.FontBold = true;
@@ -89,7 +90,7 @@ SCSFExport scsf_Trading_Locked_Text(SCStudyInterfaceRef sc)
 	// If trading is locked, then display the text
 	if (sc.TradingIsLocked == 1)
 	{
-        Tool.Text = sc.TextInput.GetChars();
+		Tool.Text = sc.TextInput.GetChars();
 		Tool.FontSize = TextDisplay.LineWidth;
 		Tool.AddMethod = UTAM_ADD_OR_ADJUST;
 		Tool.ReverseTextColor = false;
@@ -99,12 +100,11 @@ SCSFExport scsf_Trading_Locked_Text(SCStudyInterfaceRef sc)
 	}
 	else if (sc.TradingIsLocked == 0)
 	{
-        // If the text was previously drawn, delete it.
-        if (r_TextDrawingLineNumber != 0)
-        {
-            sc.DeleteUserDrawnACSDrawing(sc.ChartNumber, r_TextDrawingLineNumber);   
-            r_TextDrawingLineNumber = 0;  // Reset to indicate the drawing is no longer on the chart.
-        }
-        
-    }
+		// If the text was previously drawn, delete it.
+		if (r_TextDrawingLineNumber != 0)
+		{
+			sc.DeleteUserDrawnACSDrawing(sc.ChartNumber, r_TextDrawingLineNumber);
+			r_TextDrawingLineNumber = 0; // Reset to indicate the drawing is no longer on the chart.
+		}
+	}
 }
