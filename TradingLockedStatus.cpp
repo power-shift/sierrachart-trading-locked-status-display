@@ -1,8 +1,8 @@
 #include "sierrachart.h"
 
-SCDLLName("TradingLockedText")
+SCDLLName("TradingLockedStatus")
 
-	SCSFExport scsf_Trading_Locked_Text(SCStudyInterfaceRef sc)
+	SCSFExport scsf_Trading_Locked_Status(SCStudyInterfaceRef sc)
 {
 	SCSubgraphRef TextDisplay = sc.Subgraph[0];
 
@@ -17,7 +17,7 @@ SCDLLName("TradingLockedText")
 	{
 		// Set the configuration and defaults
 
-		sc.GraphName = "Trading Locked Text";
+		sc.GraphName = "Trading Locked Status";
 		sc.AutoLoop = 0;
 		sc.FreeDLL = 0;
 		sc.GraphRegion = 0;
@@ -40,7 +40,7 @@ SCDLLName("TradingLockedText")
 		DisplayInFillSpace.Name = "Display in Fill Space";
 		DisplayInFillSpace.SetYesNo(false);
 
-		BoldFont.Name = "Used Bold Font";
+		BoldFont.Name = "Use Bold Font";
 		BoldFont.SetYesNo(true);
 
 		sc.TextInputName = "Locked Text";
